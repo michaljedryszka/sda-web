@@ -1,6 +1,5 @@
 package pl.sda.java.jsp.rest.domain;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -8,7 +7,7 @@ public class Subject extends Identifable{
     private String author;
     private String title;
     private String content;
-    private LocalDateTime publicationDate;
+    private long publicationDate;
     private List<Answer> answers = new ArrayList<>();
 
     public String getAuthor() {
@@ -35,11 +34,11 @@ public class Subject extends Identifable{
         this.content = content;
     }
 
-    public LocalDateTime getPublicationDate() {
+    public long getPublicationDate() {
         return publicationDate;
     }
 
-    public void setPublicationDate(LocalDateTime publicationDate) {
+    public void setPublicationDate(long publicationDate) {
         this.publicationDate = publicationDate;
     }
 

@@ -1,12 +1,6 @@
 package pl.sda.java.jsp.rest.domain;
 
-import java.time.Instant;
-import java.time.LocalDateTime;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class ForumManager {
 
@@ -19,7 +13,7 @@ public class ForumManager {
         Subject subject = new Subject();
         subject.setAuthor("admin");
         subject.setTitle("Forum rules");
-        subject.setPublicationDate(LocalDateTime.now());
+        subject.setPublicationDate(new Date().getTime());
         subject.setContent("Rules of conduct: ....");
         initialForum.setSubjects(Arrays.asList(subject));
         FORUMS.put(1, initialForum);
