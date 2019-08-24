@@ -1,0 +1,51 @@
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns="http://java.sun.com/xml/ns/javaee"
+         xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
+         xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
+         id="WebApp_ID" version="3.0">
+    <servlet>
+        <servlet-name>sayhello</servlet-name>
+        <servlet-class>pl.sda.java.jsp.servlet.HelloServlet</servlet-class>
+        <init-param>
+            <param-name>p1</param-name>
+            <param-value>v1</param-value>
+        </init-param>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>sayhello</servlet-name>
+        <url-pattern>/sayhello</url-pattern>
+    </servlet-mapping>
+    <welcome-file-list>
+        <welcome-file>/home/home.html</welcome-file>
+    </welcome-file-list>
+    <error-page>
+        <error-code>404</error-code>
+        <location>/error/404.html</location>
+    </error-page>
+    <error-page>
+        <error-code>500</error-code>
+        <location>/error/500.html</location>
+    </error-page>
+<!--
+    <error-page>
+        <location>/error/generalError.html</location>
+    </error-page>
+-->
+    <context-param>
+        <param-name>ctx-param-1</param-name>
+        <param-value>ctx-param-value-1</param-value>
+    </context-param>
+    <!-- filter z xml -->
+    <filter>
+        <filter-name>xmlFilter</filter-name>
+        <filter-class>pl.sda.java.jsp.filter.XmlFilter</filter-class>
+        <init-param>
+            <param-name>test</param-name>
+            <param-value>testValue</param-value>
+        </init-param>
+    </filter>
+    <filter-mapping>
+        <filter-name>xmlFilter</filter-name>
+        <url-pattern>/filter/*</url-pattern>
+    </filter-mapping>
+</web-app>
