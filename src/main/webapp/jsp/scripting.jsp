@@ -1,7 +1,7 @@
 <%@ page language="java" %>
 <%-- Komentarz--%>
 Deklaruje zmienna i<br/>
-<%! int i = 0; %>
+<% int i = 0; %>
 Inkrementuje i wypisuje <%= ++i %><br/>
 Inkrementuje ponownie<br/>
 <% i++; %>
@@ -10,8 +10,15 @@ Wypisujemy w petli<br/>
 <% for(int k = 0; k <= i; k++){ %>
 Wartosc k=<%=k%><br/>
 <% } %>
-<% if (i < 5) { %>
-i jest mniejsze od 5
+<%
+    int parametr = 5;
+    if(request.getParameter("parametr") != null){
+        parametr = Integer.valueOf(request.getParameter("parametr"));
+    }
+%>
+<% if (i < parametr) { %>
+i jest mniejsze od <%=parametr%>
 <% } else {%>
-i jest wieksze od 5
+i jest wieksze od <%=parametr%>
 <% } %>
+<p>${param['parametr']}</p>

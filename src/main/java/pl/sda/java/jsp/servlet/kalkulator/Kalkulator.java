@@ -20,6 +20,10 @@ public class Kalkulator {
         argument1 = "";
     }
 
+    public String getWyswietl(){
+        return wyswietl();
+    }
+
     public void dodaj(){
         argument2 = argument1;
         argument1 = "";
