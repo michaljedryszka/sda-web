@@ -28,7 +28,6 @@ public class RestKalkulatorServlet extends HttpServlet {
 
     @Override
     protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        System.out.println(req.getRequestURI());
         String uri = req.getRequestURI();
         String[] uriArray = uri.split("/");
         if (uriArray.length == 6 &&
@@ -37,6 +36,22 @@ public class RestKalkulatorServlet extends HttpServlet {
             String wartosc = uriArray[uriArray.length - 1];
             if (kalkulatory.containsKey(idKalkulatora)) {
                 kalkulatory.get(idKalkulatora).wprowadz(wartosc);
+                return;
+            }
+        }
+        if (uriArray.length == 5 &&
+                uriArray[uriArray.length - 1].equals("dodaj")) {
+            long idKalkulatora = Long.valueOf(uriArray[uriArray.length - 2]);
+            if (kalkulatory.containsKey(idKalkulatora)) {
+                kalkulatory.get(idKalkulatora).dodaj();
+                return;
+            }
+        }
+        if (uriArray.length == 5 &&
+                uriArray[uriArray.length - 1].equals("wykonaj")) {
+            long idKalkulatora = Long.valueOf(uriArray[uriArray.length - 2]);
+            if (kalkulatory.containsKey(idKalkulatora)) {
+                kalkulatory.get(idKalkulatora).wykonaj();
                 return;
             }
         }
