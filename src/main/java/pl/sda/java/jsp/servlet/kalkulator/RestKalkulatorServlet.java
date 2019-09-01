@@ -7,8 +7,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 @WebServlet(
         name = "rest-kalkulator",
@@ -16,6 +15,8 @@ import java.util.Map;
 )
 public class RestKalkulatorServlet extends HttpServlet {
     private Map<Long, Kalkulator> kalkulatory = new HashMap<>();
+    private Map<Long, Long> znacznikiCzasu = new HashMap<>();
+    private Thread watekSprzatajacy;
     private Long id = 0l;
 
     @Override
@@ -23,6 +24,7 @@ public class RestKalkulatorServlet extends HttpServlet {
         id++;
         Kalkulator kalkulator = new Kalkulator();
         kalkulatory.put(id, kalkulator);
+        znacznikiCzasu.put(id, new Date().getTime());
         resp.getWriter().print(id);
     }
 
@@ -35,7 +37,7 @@ public class RestKalkulatorServlet extends HttpServlet {
             long idKalkulatora = Long.valueOf(uriArray[uriArray.length - 3]);
             String wartosc = uriArray[uriArray.length - 1];
             if (kalkulatory.containsKey(idKalkulatora)) {
-                kalkulatory.get(idKalkulatora).wprowadz(wartosc);
+                getKalkulator(idKalkulatora).wprowadz(wartosc);
                 return;
             }
         }
@@ -43,7 +45,7 @@ public class RestKalkulatorServlet extends HttpServlet {
                 uriArray[uriArray.length - 1].equals("dodaj")) {
             long idKalkulatora = Long.valueOf(uriArray[uriArray.length - 2]);
             if (kalkulatory.containsKey(idKalkulatora)) {
-                kalkulatory.get(idKalkulatora).dodaj();
+                getKalkulator(idKalkulatora).dodaj();
                 return;
             }
         }
@@ -51,11 +53,29 @@ public class RestKalkulatorServlet extends HttpServlet {
                 uriArray[uriArray.length - 1].equals("wykonaj")) {
             long idKalkulatora = Long.valueOf(uriArray[uriArray.length - 2]);
             if (kalkulatory.containsKey(idKalkulatora)) {
-                kalkulatory.get(idKalkulatora).wykonaj();
+                getKalkulator(idKalkulatora).wykonaj();
                 return;
             }
         }
         resp.setStatus(HttpServletResponse.SC_NOT_FOUND);
+    }
+
+    private Kalkulator getKalkulator(long idKalkulatora) {
+        znacznikiCzasu.put(idKalkulatora, new Date().getTime());
+        return kalkulatory.get(idKalkulatora);
+    }
+
+    private void sprzatanie(){
+        Long chwilaObecna = new Date().getTime();
+        List<Long> idDusuniecia = new ArrayList();
+        for(Map.Entry<Long, Long> znacznik : znacznikiCzasu.entrySet()){
+            if( chwilaObecna - znacznik.getValue() > 10 * 1000){
+                kalkulatory.remove(znacznik.getKey());
+                idDusuniecia.add(znacznik.getKey());
+                System.out.println("Usuwam: " + znacznik.getKey());
+            }
+        }
+        idDusuniecia.stream().forEach(znacznikiCzasu::remove);
     }
 
     @Override
@@ -66,11 +86,31 @@ public class RestKalkulatorServlet extends HttpServlet {
                 uriArray[uriArray.length - 1].equals("wyswietl")) {
             long idKalkulatora = Long.valueOf(uriArray[uriArray.length - 2]);
             if (kalkulatory.containsKey(idKalkulatora)) {
-                resp.getWriter().print(kalkulatory.get(idKalkulatora).wyswietl());
+                resp.getWriter().print(getKalkulator(idKalkulatora).wyswietl());
                 return;
             }
         }
         resp.setStatus(HttpServletResponse.SC_NOT_FOUND);
+    }
+
+    @Override
+    public void init() throws ServletException {
+        watekSprzatajacy = new Thread(() -> {
+            while(true){
+                System.out.println("Sprzatam");
+                sprzatanie();
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                }
+            }
+        });
+        watekSprzatajacy.start();
+    }
+
+    @Override
+    public void destroy() {
+        watekSprzatajacy.interrupt();
     }
 
     public static void main(String[] args) {
