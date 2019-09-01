@@ -12,14 +12,15 @@ public class URLGet {
 
     public static void main(String[] args) throws Exception {
         // Przekazanie parametrow przez url
-        URL url = new URL("http://localhost:9999/web/kalkulator?arg=12");
+        URL url = new URL("http://localhost:9999/web/kalkulator?arg=8");
         HttpURLConnection connection = (HttpURLConnection) url.openConnection();
         // Ustawienie metody
         connection.setRequestMethod("GET");
         // Naglowki
+        connection.setRequestProperty("Accept", "text/html");
         connection.setRequestProperty("Content-Type", "text/html");
         // Cookie
-        connection.setRequestProperty("Cookie", "JSESSIONID=3t3923i78max4yspoc777dm1;");
+        connection.setRequestProperty("Cookie", "JSESSIONID=mghc8vs8ei8qqqj3bg6jrdf1;");
 
         // Wykonanie -> getResponseCode | connect | getInputStream | getOutputStream
         int code = connection.getResponseCode();

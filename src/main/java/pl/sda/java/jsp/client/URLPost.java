@@ -5,6 +5,7 @@ import java.io.DataOutputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
 
 /**
  * Wywołanie zadania post
@@ -19,11 +20,20 @@ public class URLPost {
         // Naglowki
         connection.setRequestProperty("Content-Type", "text/html");
         // Cookie
-        connection.setRequestProperty("Cookie", "JSESSIONID=3t3923i78max4yspoc777dm1;");
+        connection.setRequestProperty("Cookie", "JSESSIONID=mghc8vs8ei8qqqj3bg6jrdf1;");
         // Przekazanie parametrow przez url
+
+        String urlParameters = "evaluate=%3D";
+        byte[] postData = urlParameters.getBytes(StandardCharsets.UTF_8);
+        int postDataLength = postData.length;
+
+        connection.setRequestProperty( "Content-Type", "application/x-www-form-urlencoded");
+        connection.setRequestProperty( "charset", "utf-8");
+        connection.setRequestProperty( "Content-Length", Integer.toString( postDataLength ));
+
         connection.setDoOutput(true);
         DataOutputStream out = new DataOutputStream(connection.getOutputStream());
-        out.writeBytes("ce=true");
+        out.write(postData);
         out.flush();
         out.close();
 

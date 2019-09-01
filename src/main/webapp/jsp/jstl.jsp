@@ -13,11 +13,11 @@
 <p>i: <c:out value="${i}"/></p>
 <p>j: <c:out value="j"/></p>
 <p>j: <c:out value="${j}"/></p>
+<p>lista stringow: <c:out value="${listaStringow}"/></p>
 
 <p>c:set</p>
 <c:set var = "salary" scope = "session" value = "${2000*2}"/>
-<c:out value = "salary"/>
-salary
+<p>salary <c:out value = "${salary}"/></p>
 <p><c:out value = "${salary*3}"/></p>
 <c:remove var = "salary"/>
 <p><c:out value = "${salary}"/> po usunieciu</p>
@@ -39,7 +39,7 @@ salary
       <p>Your salary is : <c:out value = "${salary}"/></p>
       <c:choose>
          <c:when test = "${salary <= 0}">
-            Salary is very low to survive.
+            Salary is ver low to survive.
          </c:when>
          <c:when test = "${salary > 1000}">
             Salary is very good.
@@ -56,8 +56,9 @@ salary
       </c:forEach>
 
       <c:forEach items="${listaStringow}" var = "s" varStatus="loop">
-         <p>s <c:out value = "${s} ${loop.index}"/></p>
+         <p><c:out value = "${s} ${loop.index}"/></p>
       </c:forEach>
+
 <p>param + url</p>
 <c:url value = "/all.html" var = "url">
    <c:param name = "p1" value = "1234"/>
