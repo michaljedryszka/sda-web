@@ -23,18 +23,18 @@ public class ForumServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String pathInfo = req.getPathInfo();
+        String requestURI = req.getRequestURI();
         int status = HttpServletResponse.SC_NOT_FOUND;
-        if (pathInfo == null) {
+        if (requestURI == null) {
             resp.getWriter().print(gson.toJson(forumManager.getForums()));
             status = HttpServletResponse.SC_FOUND;
-        } else if (!pathInfo.contains("/subject") && !pathInfo.contains("/answer")) {
-            String[] splitted = pathInfo.split("/");
+        } else if (!requestURI.contains("/subject") && !requestURI.contains("/answer")) {
+            String[] splitted = requestURI.split("/");
             int forumId = Integer.valueOf(splitted[1]);
             resp.getWriter().print(gson.toJson(forumManager.getForum(forumId)));
             status = HttpServletResponse.SC_FOUND;
-        } else if (pathInfo.contains("/subject") && !pathInfo.contains("/answer")) {
-            String[] splitted = pathInfo.split("/");
+        } else if (requestURI.contains("/subject") && !requestURI.contains("/answer")) {
+            String[] splitted = requestURI.split("/");
             int forumId = Integer.valueOf(splitted[1]);
             if (forumManager.getForum(forumId) != null) {
                 resp.getWriter().print(gson.toJson(forumManager.getForum(forumId).getSubjects()));
