@@ -21,7 +21,7 @@
 <tbody>
 <c:forEach items="${forums}" var = "forum">
     <tr class="row100 body">
-    <td class="cell100 column1"><a href="./subjectList.jsp?forumId=${forum.id}">${forum.name}</a></td>
+    <td class="cell100 column1"><a href="./subjectList?forumId=${forum.id}">${forum.name}</a></td>
     <td class="cell100 column2">${forum.subjectCount}</td>
     <td class="cell100 column3">${forum.userCount}</td>
     <td class="cell100 column4">${forum.lastSubject}</td>

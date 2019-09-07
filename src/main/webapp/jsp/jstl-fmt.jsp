@@ -18,7 +18,8 @@
 
 <p>parseDate</p>
 <c:set var="date" value="12-08-2016" />
-<fmt:parseDate value="${date}" var="parsedDate"  pattern="dd-MM-yyyy" />
+<fmt:parseDate value="${date}"
+    var="parsedDate"  pattern="dd-MM-yyyy" />
 <p><c:out value="${parsedDate}" /></p>
 
 <p>formatDate</p>
