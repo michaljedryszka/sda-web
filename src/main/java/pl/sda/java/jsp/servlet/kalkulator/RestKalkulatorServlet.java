@@ -10,7 +10,7 @@ import java.io.IOException;
 import java.util.*;
 
 @WebServlet(
-        name = "rest-kalkulator",
+        name = "forum-kalkulator",
         urlPatterns = {"/rkalkulator", "/rkalkulator/*"}
 )
 public class RestKalkulatorServlet extends HttpServlet {

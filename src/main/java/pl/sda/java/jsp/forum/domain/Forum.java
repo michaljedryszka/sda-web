@@ -1,4 +1,4 @@
-package pl.sda.java.jsp.rest.domain;
+package pl.sda.java.jsp.forum.domain;
 
 import java.util.ArrayList;
 import java.util.List;

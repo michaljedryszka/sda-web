@@ -1,20 +1,21 @@
-package pl.sda.java.jsp.rest.servlet;
+package pl.sda.java.jsp.forum.servlet;
 
 import com.google.gson.Gson;
 
 import java.io.IOException;
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import pl.sda.java.jsp.rest.domain.ForumManager;
+import pl.sda.java.jsp.forum.domain.ForumManager;
 
+/*
 @WebServlet(
         name = "forum",
         urlPatterns = {"/forum", "/forum/*"}
 )
+*/
 public class ForumServlet extends HttpServlet {
 
     private ForumManager forumManager;
