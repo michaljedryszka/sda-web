@@ -8,7 +8,7 @@ public abstract class Identifable {
         id = ID_SEQUENCE ++;
     }
 
-    Integer id;
+    protected Integer id;
 
     public Integer getId() {
         return id;

@@ -23,6 +23,7 @@ public class ForumManager {
                     answer.setAuthor("autor " + k);
                     answer.setContent("Response " + k);
                     answer.setPublicationDate(new Date().getTime());
+                    subject.getAnswers().add(answer);
                 }
             }
             FORUMS.put(initialForum.getId(), initialForum);
