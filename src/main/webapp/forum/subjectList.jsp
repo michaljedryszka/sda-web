@@ -25,7 +25,8 @@
 <tbody>
 <c:forEach items="${subjects}" var = "subject">
     <tr class="row100 body">
-    <td class="cell100 column1"><a href="">${subject.title}</a></td>
+    <td class="cell100 column1">
+    <a href="./answerList?forumId=${param['forumId']}&subjectId=${subject.id}">${subject.title}</a></td>
     <td class="cell100 column2">${subject.author}</td>
     <td class="cell100 column3">
         <fmt:formatDate type="both" value="${subject.convertedDate}" />
