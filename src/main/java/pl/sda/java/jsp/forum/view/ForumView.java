@@ -14,7 +14,7 @@ public class ForumView extends Forum {
     public ForumView(Forum forum){
         setName(forum.getName());
         setSubjects(forum.getSubjects());
-        setUsers(forum.getUsers());
+        //setUsers(forum.getUsers());
         setId(forum.getId());
     }
 

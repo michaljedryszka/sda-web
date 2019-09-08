@@ -40,6 +40,8 @@ public class AnswerListServlet extends HttpServlet {
         String author = req.getParameter("author");
         String content = req.getParameter("content");
         forumManager.addAnswer(forumId, subjectId, author, content);
+        // after post redirect
+        resp.sendRedirect("/web/answerList?forumId="+forumId+"&subjectId="+subjectId);
     }
 
     @Override

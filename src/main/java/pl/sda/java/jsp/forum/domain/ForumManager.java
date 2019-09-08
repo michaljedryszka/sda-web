@@ -10,7 +10,7 @@ public class ForumManager {
         for(int i = 0; i < 10 ; i++){
             Forum initialForum = new Forum();
             initialForum.setName("Forum " + i);
-            initialForum.setUsers(Arrays.asList("admin", "moderator"));
+            //initialForum.setUsers(Arrays.asList("admin", "moderator"));
             for(int j = 0; j < 20; j ++){
                 Subject subject = new Subject();
                 subject.setAuthor("admin");
