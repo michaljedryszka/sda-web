@@ -12,7 +12,9 @@
 <th class="cell100 column2">Autor</th>
 <th class="cell100 column3">Data publikacji</th>
 <th class="cell100 column4">
-    <a href="?forumId=${param['forumId']}&sort=asc">Data ostatniej odpowiedzi</a>
+    <c:set var = "sortDirection" scope = "page" value = "${param['sort'] eq 'asc' ? 'desc' : 'asc'}"/>
+    <c:set var = "arrow" scope = "page" value = "${param['sort'] eq 'asc' ? '&darr;' : '&uarr;'}"/>
+    <a href="?forumId=${param['forumId']}&sort=${sortDirection}"> ${arrow} Data ostatniej odpowiedzi</a>
 </th>
 </tr>
 </thead>

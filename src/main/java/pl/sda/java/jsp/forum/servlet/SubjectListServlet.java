@@ -11,9 +11,11 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 @WebServlet(
@@ -28,25 +30,70 @@ public class SubjectListServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
         List<Subject> subjects = forumManager.getSubjects(Integer.valueOf(req.getParameter("forumId")));
+
+        Function<Subject, SubjectView> mapperByInstance = new Mapper();
+        Function<Subject, SubjectView> mapperAnonymousInstance = new Function<Subject, SubjectView>() {           @Override
+            public SubjectView apply(Subject subject) {
+                return new SubjectView(subject);
+            }
+        };
+        Function<Subject, SubjectView> mapperByMethod = this::mapper;
+        Function<Subject, SubjectView> mapperByLambda = (x) -> new SubjectView(x);
+        Function<Subject, SubjectView> mapperByConstructor = SubjectView::new;
+        List<SubjectView> subjectViews = subjects
+                .stream()
+//                .map(mapperByInstance)
+//                .map(mapperAnonymousInstance)
+//                .map(mapperByMethod)
+//                .map(mapperByLambda)
+//                .map(mapperByConstructor)
+                .map(SubjectView::new)
+                .collect(Collectors.toList());
         //Sortowanie po dacie ostatniej odpowiedzi
         String sortDirection = req.getParameter("sort");
         if ("asc".equals(sortDirection)) {
-
+            Collections.sort(subjectViews, Comparator.comparing(SubjectView::getLastAnswerDate));
         } else if ("desc".equals(sortDirection)) {
-
+            Collections.sort(subjectViews, Comparator.comparing(SubjectView::getLastAnswerDate).reversed());
         } else {
-            Collections.sort(subjects, Comparator.comparingLong(Subject::getPublicationDate));
+            Collections.sort(subjectViews, Comparator.comparingLong(Subject::getPublicationDate));
         }
-        req.setAttribute("subjects", subjects
-                .stream()
-                .map(SubjectView::new)
-                .collect(Collectors.toList())
-        );
+        req.setAttribute("subjects", subjectViews);
         req.getRequestDispatcher("forum/subjectList.jsp").forward(req, resp);
     }
 
     @Override
     public void init() throws ServletException {
         forumManager = new ForumManager();
+    }
+
+    SubjectView mapper(Subject subject){
+        return new SubjectView(subject);
+    }
+
+    public static void main(String[] args) {
+        List<Object> listo = new ArrayList<>();
+        int x = 1;
+        listo.add(x);
+        String s = "s";
+        listo.add(s);
+
+        int xo = Integer.class.cast(listo.get(0));
+        xo = (int)listo.get(0);
+        List<Subject> subjects = null;
+        List<SubjectView> subjectViews = null;
+        //subjectViews = subjects;
+        subjects = (List)subjectViews;
+        List list = new ArrayList();
+        int y=1;
+        list.add(y);
+        y = (int )list.get(0);
+    }
+}
+
+class Mapper implements Function<Subject, SubjectView>{
+    @Override
+    public SubjectView apply(Subject subject) {
+        return new SubjectView(subject);
     }
 }
