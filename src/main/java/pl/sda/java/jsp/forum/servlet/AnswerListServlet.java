@@ -34,6 +34,15 @@ public class AnswerListServlet extends HttpServlet {
     }
 
     @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        int forumId = Integer.valueOf(req.getParameter("forumId"));
+        int subjectId = Integer.valueOf(req.getParameter("subjectId"));
+        String author = req.getParameter("author");
+        String content = req.getParameter("content");
+        forumManager.addAnswer(forumId, subjectId, author, content);
+    }
+
+    @Override
     public void init() throws ServletException {
         forumManager = new ForumManager();
     }

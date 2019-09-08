@@ -50,4 +50,13 @@ public class ForumManager {
     public List<Answer> getAnswers(int forumId, int subjectId) {
         return getSubject(forumId, subjectId).getAnswers();
     }
+
+    public void addAnswer(int forumId, int subjectId, String author, String content) {
+        Subject subject = getSubject(forumId, subjectId);
+        Answer answer = new Answer();
+        answer.setAuthor(author);
+        answer.setContent(content);
+        answer.setPublicationDate(new Date().getTime());
+        subject.getAnswers().add(answer);
+    }
 }

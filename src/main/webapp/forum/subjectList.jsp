@@ -3,6 +3,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <c:set var = "title" scope = "page" value = "Lista tematow"/>
 <%@include file="header.jsp" %>
+<p>><a href="./forumList">Lista for</a></p>
 <div class="table100 ver5 m-b-110">
 <div class="table100-head">
 <table>
