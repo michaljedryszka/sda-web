@@ -27,6 +27,7 @@
 <c:forEach items="${subjects}" var = "subject">
     <tr class="row100 body">
     <td class="cell100 column1">
+    <a href="?forumId=${param['forumId']}&subjectToEdit=${subject.id}">E</a>
     <a href="./answerList?forumId=${param['forumId']}&subjectId=${subject.id}">${subject.title}</a></td>
     <td class="cell100 column2">${subject.author}</td>
     <td class="cell100 column3">
@@ -34,9 +35,22 @@
     </td>
     <td class="cell100 column4">
         <fmt:formatDate type="both" value="${subject.lastAnswerDate}" />
+        <a href="?forumId=${param['forumId']}&subjectToDelete=${subject.id}">X</a>
     </td>
     </tr>
 </c:forEach>
 </tbody>
 </table>
+  <form method="post">
+    <label for="author">Autor</label>
+    <input type="text" id="author" name="author" placeholder="Your name..">
+    <label for="title">Tytuł</label>
+    <input type="text" id="title" name="title" placeholder="Tytuł.." value="${subjectToEdit.title}"/>
+    <label for="content">Tresc</label>
+    <textarea cols="10" id="content" name="content" placeholder="Treść..">${subjectToEdit.content}</textarea>
+    <input type="submit" value="Submit">
+    <input type="hidden" name="forumId" value="${param['forumId']}">
+    <input type="hidden" name="subjectToEdit" value="${param['subjectToEdit']}">
+  </form>
+
 <%@include file="footer.jsp" %>

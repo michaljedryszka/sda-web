@@ -26,6 +26,9 @@ public class SubjectView extends Subject {
         Comparator<Answer> comparator = Comparator.comparingLong(Answer::getPublicationDate);
         TreeSet<Answer> set = new TreeSet<>(comparator);
         set.addAll(getAnswers());
+        if(set.isEmpty()){
+            return null;
+        }
         return new Date(set.last().getPublicationDate());
     }
 }

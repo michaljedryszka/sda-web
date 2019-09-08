@@ -45,6 +45,9 @@ public class ForumView extends Forum {
                 .stream()
                 .forEach(s -> set.addAll(s.getAnswers()));
 */
+        if(set.isEmpty()){
+            return null;
+        }
         Answer answer = set.last();
         //set.last();
         for(Subject subject : getSubjects()){

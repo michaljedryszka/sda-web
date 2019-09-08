@@ -59,4 +59,25 @@ public class ForumManager {
         answer.setPublicationDate(new Date().getTime());
         subject.getAnswers().add(answer);
     }
+
+    public void addSubject(int forumId, String author, String title, String content) {
+        Subject subject = new Subject();
+        subject.setAuthor(author);
+        subject.setContent(content);
+        subject.setTitle(title);
+        subject.setPublicationDate(new Date().getTime());
+        getForum(forumId).getSubjects().add(subject);
+    }
+
+    public void deleteSubject(int forumId, int subjectToDelete) {
+        Forum forum = getForum(forumId);
+        Subject subject = getSubject(forumId, subjectToDelete);
+        forum.getSubjects().remove(subject);
+    }
+
+    public void updateSubject(int forumId, int subjectId, String title, String content) {
+        Subject subject = getSubject(forumId, subjectId);
+        subject.setTitle(title);
+        subject.setContent(content);
+    }
 }

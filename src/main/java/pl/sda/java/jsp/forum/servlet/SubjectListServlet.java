@@ -28,9 +28,19 @@ public class SubjectListServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        int forumId = Integer.valueOf(req.getParameter("forumId"));
 
-        List<Subject> subjects = forumManager.getSubjects(Integer.valueOf(req.getParameter("forumId")));
+        if(req.getParameter("subjectToDelete") != null){
+            int subjectToDelete = Integer.valueOf(req.getParameter("subjectToDelete"));
+            forumManager.deleteSubject(forumId, subjectToDelete);
+        }
+        if(req.getParameter("subjectToEdit") != null){
+            int subjectToEdit = Integer.valueOf(req.getParameter("subjectToEdit"));
+            Subject subject = forumManager.getSubject(forumId, subjectToEdit);
+            req.setAttribute("subjectToEdit", subject);
+        }
 
+        List<Subject> subjects = forumManager.getSubjects(forumId);
         Function<Subject, SubjectView> mapperByInstance = new Mapper();
         Function<Subject, SubjectView> mapperAnonymousInstance = new Function<Subject, SubjectView>() {           @Override
             public SubjectView apply(Subject subject) {
@@ -60,6 +70,22 @@ public class SubjectListServlet extends HttpServlet {
         }
         req.setAttribute("subjects", subjectViews);
         req.getRequestDispatcher("forum/subjectList.jsp").forward(req, resp);
+    }
+
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        int forumId = Integer.valueOf(req.getParameter("forumId"));
+        String author = req.getParameter("author");
+        String title = req.getParameter("title");
+        String content = req.getParameter("content");
+
+        if(req.getParameter("subjectToEdit") == null){
+            forumManager.addSubject(forumId, author, title, content);
+        }else{
+            int subjectId = Integer.valueOf(req.getParameter("subjectToEdit"));
+            forumManager.updateSubject(forumId, subjectId, title, content);
+        }
+        resp.sendRedirect("/web/subjectList?forumId=" + forumId);
     }
 
     @Override
