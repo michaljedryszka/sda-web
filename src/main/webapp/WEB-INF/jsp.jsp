@@ -35,4 +35,6 @@ Foreach:
 Foreach z indexem
 <c:forEach var = "i" begin = "1" end = "5">
     <c:out value = "${i}"/>
-</c:forEach>
+</c:forEach><br/>
+
+parametr z requesta: ${param["parametr"]}
